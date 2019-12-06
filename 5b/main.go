@@ -9,7 +9,7 @@ import (
 )
 
 func input() int {
-	return 1
+	return 5
 }
 
 func output(v int) {
@@ -60,6 +60,68 @@ func computer(program []int) []int {
 			}
 			output(result[target])
 			pc += 2
+		case 5:
+			cond := result[pc+1]
+			if modes[2] == '0' {
+				cond = result[cond]
+			}
+			dest := result[pc+2]
+			if modes[1] == '0' {
+				dest = result[dest]
+			}
+			fmt.Printf("is %d true?", cond)
+			if cond != 0 {
+				pc = dest
+			} else {
+				pc = pc + 3
+			}
+		case 6:
+			cond := result[pc+1]
+			if modes[2] == '0' {
+				cond = result[cond]
+			}
+			dest := result[pc+2]
+			if modes[1] == '0' {
+				dest = result[dest]
+			}
+			fmt.Printf("is %d false?", cond)
+			if cond == 0 {
+				pc = dest
+			} else {
+				pc = pc + 3
+			}
+		case 7:
+			l := result[pc+1]
+			if modes[2] == '0' {
+				l = result[l]
+			}
+			r := result[pc+2]
+			if modes[1] == '0' {
+				r = result[r]
+			}
+			fmt.Printf("is %d < %d?", l, r)
+			if l < r {
+				result[result[pc+3]] = 1
+			} else {
+				result[result[pc+3]] = 0
+			}
+			pc += 4
+		case 8:
+			l := result[pc+1]
+			if modes[2] == '0' {
+				l = result[l]
+			}
+			r := result[pc+2]
+			if modes[1] == '0' {
+				r = result[r]
+			}
+			fmt.Printf("is %d == %d?", l, r)
+			if l == r {
+				result[result[pc+3]] = 1
+			} else {
+				result[result[pc+3]] = 0
+			}
+			pc += 4
 		default:
 			log.Fatalf("at pc %d, unknown opcode %d", pc, result[pc])
 		}
